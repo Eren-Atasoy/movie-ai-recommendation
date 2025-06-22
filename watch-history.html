@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>İzleme Geçmişim - FilmAI</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="profile-page">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="fas fa-film me-2"></i>FilmAI
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Ana Sayfa</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html#categories">Kategoriler</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html#popular">En İyiler</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Yeni Çıkanlar</a>
+                    </li>
+                </ul>
+                <div class="d-flex ms-3" id="auth-buttons">
+                    <!-- Auth buttons will be added by auth.js -->
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Profile Header -->
+    <header class="profile-header">
+        <div class="container py-5">
+            <div class="profile-header-content">
+                <div class="row align-items-center">
+                    <div class="col-md-3 text-center text-md-start">
+                        <div class="profile-avatar mx-auto mx-md-0">
+                            <i class="fas fa-user"></i>
+                        </div>
+                    </div>
+                    <div class="col-md-9 mt-4 mt-md-0">
+                        <h1 class="profile-name" id="profile-username">Kullanıcı Adı</h1>
+                        <p class="text-muted" id="profile-email">kullanici@ornek.com</p>
+                        <p class="mb-0"><span class="badge bg-secondary me-2">Film Tutkunu</span> <small class="text-muted">Üyelik: <span id="profile-join-date">Ocak 2023</span></small></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Profile Content -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row">
+                <!-- Sidebar -->
+                <div class="col-lg-3 mb-4">
+                    <div class="profile-sidebar">
+                        <h5 class="mb-4">Hesap Yönetimi</h5>
+                        <ul class="nav flex-column profile-nav">
+                            <li class="nav-item">
+                                <a class="nav-link" href="profile.html">
+                                    <i class="fas fa-user-circle me-2"></i> Profil Bilgileri
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="favorites.html">
+                                    <i class="fas fa-heart me-2"></i> Favorilerim
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" href="watch-history.html">
+                                    <i class="fas fa-history me-2"></i> İzleme Geçmişi
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#" id="logoutBtn">
+                                    <i class="fas fa-sign-out-alt me-2"></i> Çıkış Yap
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Main Content -->
+                <div class="col-lg-9">
+                    <!-- Watch History Card -->
+                    <div class="profile-card mb-4">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h5><i class="fas fa-history me-2"></i> İzleme Geçmişim</h5>
+                            <span class="badge bg-primary" id="history-count">0 Film</span>
+                        </div>
+                        <div class="card-body">
+                            <!-- Search and Filter -->
+                            <div class="row mb-4">
+                                <div class="col-md-6 mb-3 mb-md-0">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="search-history" placeholder="İzleme geçmişimde ara...">
+                                        <button class="btn btn-outline-secondary" type="button" id="search-history-btn">
+                                            <i class="fas fa-search"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 d-flex justify-content-md-end">
+                                    <select class="form-select w-auto" id="filter-history">
+                                        <option value="date-watched-desc">İzlenme Tarihi (Yeni-Eski)</option>
+                                        <option value="date-watched-asc">İzlenme Tarihi (Eski-Yeni)</option>
+                                        <option value="rating-desc">Puanım (Yüksek-Düşük)</option>
+                                        <option value="rating-asc">Puanım (Düşük-Yüksek)</option>
+                                        <option value="title-asc">İsim (A-Z)</option>
+                                        <option value="title-desc">İsim (Z-A)</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <!-- Alert for no history -->
+                            <div class="alert alert-info d-none" id="no-history-alert">
+                                <i class="fas fa-info-circle me-2"></i> Henüz izleme geçmişinizde film bulunmuyor. İzlediğiniz filmleri buraya ekleyebilirsiniz.
+                            </div>
+                            
+                            <!-- History Table -->
+                            <div class="table-responsive">
+                                <table class="table history-table">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 60px"></th>
+                                            <th>Film</th>
+                                            <th>Tür</th>
+                                            <th>İzlenme Tarihi</th>
+                                            <th>Puanım</th>
+                                            <th style="width: 100px">İşlemler</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!-- Example history item -->
+                                        <tr>
+                                            <td>
+                                                <div class="history-movie-poster">
+                                                    <img src="https://via.placeholder.com/50x75?text=Film" alt="Film Adı">
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <h6 class="mb-0">Film Adı 1</h6>
+                                                <small class="text-muted">2023</small>
+                                            </td>
+                                            <td>Aksiyon, Macera</td>
+                                            <td>15 Haziran 2023</td>
+                                            <td>
+                                                <div class="rating text-warning">
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="far fa-star"></i>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="btn-group btn-group-sm">
+                                                    <button type="button" class="btn btn-outline-primary" title="Detaylar">
+                                                        <i class="fas fa-info-circle"></i>
+                                                    </button>
+                                                    <button type="button" class="btn btn-outline-danger" title="Geçmişten Kaldır">
+                                                        <i class="fas fa-trash"></i>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        
+                                        <!-- Example history item -->
+                                        <tr>
+                                            <td>
+                                                <div class="history-movie-poster">
+                                                    <img src="https://via.placeholder.com/50x75?text=Film" alt="Film Adı">
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <h6 class="mb-0">Film Adı 2</h6>
+                                                <small class="text-muted">2022</small>
+                                            </td>
+                                            <td>Komedi, Romantik</td>
+                                            <td>10 Haziran 2023</td>
+                                            <td>
+                                                <div class="rating text-warning">
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="far fa-star"></i>
+                                                    <i class="far fa-star"></i>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="btn-group btn-group-sm">
+                                                    <button type="button" class="btn btn-outline-primary" title="Detaylar">
+                                                        <i class="fas fa-info-circle"></i>
+                                                    </button>
+                                                    <button type="button" class="btn btn-outline-danger" title="Geçmişten Kaldır">
+                                                        <i class="fas fa-trash"></i>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        
+                                        <!-- Example history item -->
+                                        <tr>
+                                            <td>
+                                                <div class="history-movie-poster">
+                                                    <img src="https://via.placeholder.com/50x75?text=Film" alt="Film Adı">
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <h6 class="mb-0">Film Adı 3</h6>
+                                                <small class="text-muted">2021</small>
+                                            </td>
+                                            <td>Bilim Kurgu, Gerilim</td>
+                                            <td>5 Haziran 2023</td>
+                                            <td>
+                                                <div class="rating text-warning">
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="btn-group btn-group-sm">
+                                                    <button type="button" class="btn btn-outline-primary" title="Detaylar">
+                                                        <i class="fas fa-info-circle"></i>
+                                                    </button>
+                                                    <button type="button" class="btn btn-outline-danger" title="Geçmişten Kaldır">
+                                                        <i class="fas fa-trash"></i>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            
+                            <!-- Pagination -->
+                            <nav aria-label="History pagination" class="mt-4">
+                                <ul class="pagination justify-content-center">
+                                    <li class="page-item disabled">
+                                        <a class="page-link" href="#" tabindex="-1" aria-disabled="true">
+                                            <i class="fas fa-chevron-left"></i>
+                                        </a>
+                                    </li>
+                                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="#">
+                                            <i class="fas fa-chevron-right"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                    
+                    <!-- Watch Stats Card -->
+                    <div class="profile-card">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h5><i class="fas fa-chart-pie me-2"></i> İzleme İstatistiklerim</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-4 mb-4 mb-md-0">
+                                    <div class="text-center">
+                                        <h2 class="display-4 mb-0">42</h2>
+                                        <p class="text-muted">İzlenen Film</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-4 mb-md-0">
+                                    <div class="text-center">
+                                        <h2 class="display-4 mb-0">78</h2>
+                                        <p class="text-muted">Toplam Saat</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="text-center">
+                                        <h2 class="display-4 mb-0">4.2</h2>
+                                        <p class="text-muted">Ortalama Puan</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <hr class="my-4">
+                            
+                            <h6 class="mb-3">En Çok İzlediğim Türler</h6>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <div class="d-flex justify-content-between mb-1">
+                                            <span>Aksiyon</span>
+                                            <span>35%</span>
+                                        </div>
+                                        <div class="progress" style="height: 10px;">
+                                            <div class="progress-bar" role="progressbar" style="width: 35%;" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <div class="d-flex justify-content-between mb-1">
+                                            <span>Bilim Kurgu</span>
+                                            <span>25%</span>
+                                        </div>
+                                        <div class="progress" style="height: 10px;">
+                                            <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <div class="d-flex justify-content-between mb-1">
+                                            <span>Komedi</span>
+                                            <span>20%</span>
+                                        </div>
+                                        <div class="progress" style="height: 10px;">
+                                            <div class="progress-bar" role="progressbar" style="width: 20%;" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <div class="d-flex justify-content-between mb-1">
+                                            <span>Drama</span>
+                                            <span>15%</span>
+                                        </div>
+                                        <div class="progress" style="height: 10px;">
+                                            <div class="progress-bar" role="progressbar" style="width: 15%;" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-4 bg-dark text-white">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5><i class="fas fa-film me-2"></i> FilmAI</h5>
+                    <p class="small">Size en uygun filmleri keşfetmenizi sağlayan yapay zeka destekli film öneri platformu.</p>
+                </div>
+                <div class="col-md-3">
+                    <h5>Bağlantılar</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-white">Ana Sayfa</a></li>
+                        <li><a href="#" class="text-white">Hakkımızda</a></li>
+                        <li><a href="#" class="text-white">İletişim</a></li>
+                        <li><a href="#" class="text-white">Gizlilik Politikası</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h5>Bizi Takip Edin</h5>
+                    <div class="social-links">
+                        <a href="#" class="text-white me-2"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-white me-2"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-white me-2"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-white me-2"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-4">
+                <p class="small mb-0">&copy; 2023 FilmAI. Tüm hakları saklıdır.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="auth.js"></script>
+    <script src="watch-history.js"></script>
+</body>
+</html> 

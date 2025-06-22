@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FilmAI - Yapay Zeka Film Öneri Platformu</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#hero">
+                <i class="fas fa-film me-2"></i>FilmAI
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#hero">Ana Sayfa</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#categories">Kategoriler</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#popular">En İyiler</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Yeni Çıkanlar</a>
+                    </li>
+                </ul>
+                <div class="d-flex ms-3" id="auth-buttons">
+                    <button class="btn btn-outline-light" type="button" data-bs-toggle="modal" data-bs-target="#loginModal">
+                        <i class="fas fa-user me-1"></i> Giriş Yap
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Login Modal -->
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content login-modal">
+                <div class="modal-header border-0">
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body px-4 py-2">
+                    <div class="text-center mb-4">
+                        <i class="fas fa-film modal-icon mb-3"></i>
+                        <h4 class="modal-title" id="loginModalLabel">FilmAI'ya Hoş Geldiniz</h4>
+                        <p class="text-muted">Kişiselleştirilmiş film önerileri için giriş yapın</p>
+                    </div>
+                    
+                    <ul class="nav nav-tabs nav-fill mb-4" id="loginTabs" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="login-tab" data-bs-toggle="tab" data-bs-target="#login-tab-pane" type="button" role="tab" aria-controls="login-tab-pane" aria-selected="true">Giriş</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="register-tab" data-bs-toggle="tab" data-bs-target="#register-tab-pane" type="button" role="tab" aria-controls="register-tab-pane" aria-selected="false">Kayıt Ol</button>
+                        </li>
+                    </ul>
+                    
+                    <div class="tab-content" id="loginTabsContent">
+                        <!-- Giriş Formu -->
+                        <div class="tab-pane fade show active" id="login-tab-pane" role="tabpanel" aria-labelledby="login-tab" tabindex="0">
+                            <form id="loginForm">
+                                <div class="mb-3">
+                                    <label for="loginEmail" class="form-label">E-posta</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                                        <input type="email" class="form-control" id="loginEmail" name="email" placeholder="E-posta adresiniz" required>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="loginPassword" class="form-label">Şifre</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                                        <input type="password" class="form-control" id="loginPassword" name="password" placeholder="Şifreniz" required>
+                                    </div>
+                                    <div class="d-flex justify-content-end mt-1">
+                                        <a href="#" class="text-decoration-none small forgot-password">Şifremi Unuttum</a>
+                                    </div>
+                                </div>
+                                <div class="mb-3 form-check">
+                                    <input type="checkbox" class="form-check-input" id="rememberMe">
+                                    <label class="form-check-label small" for="rememberMe">Beni Hatırla</label>
+                                </div>
+                                <button type="submit" class="btn btn-primary w-100">Giriş Yap</button>
+                                
+                                <div class="alert alert-danger mt-3 d-none" id="loginError"></div>
+                                
+                                <div class="separator my-4">
+                                    <span>veya</span>
+                                </div>
+                                
+                                <div class="social-login">
+                                    <button type="button" class="btn btn-outline-light social-btn mb-2 w-100">
+                                        <i class="fab fa-google me-2"></i> Google ile Giriş Yap
+                                    </button>
+                                    <button type="button" class="btn btn-outline-light social-btn w-100">
+                                        <i class="fab fa-facebook-f me-2"></i> Facebook ile Giriş Yap
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                        
+                        <!-- Kayıt Formu -->
+                        <div class="tab-pane fade" id="register-tab-pane" role="tabpanel" aria-labelledby="register-tab" tabindex="0">
+                            <form id="registerForm">
+                                <div class="mb-3">
+                                    <label for="registerUsername" class="form-label">Kullanıcı Adı</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                        <input type="text" class="form-control" id="registerUsername" name="username" placeholder="Kullanıcı adınız" required>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="registerEmail" class="form-label">E-posta</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                                        <input type="email" class="form-control" id="registerEmail" name="email" placeholder="E-posta adresiniz" required>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="registerPassword" class="form-label">Şifre</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                                        <input type="password" class="form-control" id="registerPassword" name="password" placeholder="Şifreniz (en az 8 karakter)" required minlength="8">
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="confirmPassword" class="form-label">Şifre Tekrar</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                                        <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Şifrenizi tekrar girin" required minlength="8">
+                                    </div>
+                                </div>
+                                <div class="mb-3 form-check">
+                                    <input type="checkbox" class="form-check-input" id="termsCheck" required>
+                                    <label class="form-check-label small" for="termsCheck">
+                                        <a href="#" class="text-decoration-none">Kullanım Koşulları</a>'nı ve <a href="#" class="text-decoration-none">Gizlilik Politikası</a>'nı kabul ediyorum
+                                    </label>
+                                </div>
+                                <button type="submit" class="btn btn-primary w-100">Kayıt Ol</button>
+                                
+                                <div class="alert alert-danger mt-3 d-none" id="registerError"></div>
+                            </form>
+                        </div>
+                    </div>
+                    
+                    <!-- Alt boşluk -->
+                    <div class="py-3"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <header class="hero-section text-white text-center" id="hero">
+        <div class="container py-5">
+            <h1 class="display-4 fw-bold mb-4">Yapay Zeka ile Film Keşfet</h1>
+            <p class="lead mb-4">Beğendiğin filmlere göre özel film önerileri al, yeni favorilerini keşfet!</p>
+            
+            <div class="search-container mx-auto">
+                <div class="input-group mb-3">
+                    <input type="text" id="film-search" class="form-control form-control-lg" placeholder="Bir film adı girin...">
+                    <button class="btn btn-primary btn-lg" type="button" id="search-button">
+                        <i class="fas fa-search"></i> Film Bul
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Önerilen Filmler Section -->
+    <section class="py-5">
+        <div class="container">
+            <h2 class="section-title mb-4">Sizin İçin Öneriler</h2>
+            <p class="text-muted mb-4 text-center">Henüz bir film aramadınız. Film aradığınızda burada öneriler görüntülenecek.</p>
+            
+            <div class="row" id="recommendations-container">
+                <!-- Öneri sonuçları buraya JavaScript ile eklenecek -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Popüler Filmler Section -->
+    <section class="py-5 bg-light" id="popular">
+        <div class="container">
+            <h2 class="section-title mb-4">Popüler Filmler</h2>
+            <div class="row">
+                <!-- Popüler filmler buraya JavaScript ile eklenecek -->
+                <div class="col-12 text-center py-5">
+                    <div class="spinner-border text-primary" role="status"></div>
+                    <p class="mt-3">Popüler filmler yükleniyor...</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Kategoriler Section -->
+    <section class="py-5" id="categories">
+        <div class="container">
+            <h2 class="section-title mb-4">Kategoriler</h2>
+            <div class="row">
+                <div class="col-6 col-md-4 col-lg-2 mb-3">
+                    <div class="category-card text-center p-3 rounded">
+                        <i class="fas fa-rocket category-icon mb-2"></i>
+                        <h6 class="mb-0">Bilim Kurgu</h6>
+                    </div>
+                </div>
+                <div class="col-6 col-md-4 col-lg-2 mb-3">
+                    <div class="category-card text-center p-3 rounded">
+                        <i class="fas fa-mask category-icon mb-2"></i>
+                        <h6 class="mb-0">Aksiyon</h6>
+                    </div>
+                </div>
+                <div class="col-6 col-md-4 col-lg-2 mb-3">
+                    <div class="category-card text-center p-3 rounded">
+                        <i class="fas fa-heart category-icon mb-2"></i>
+                        <h6 class="mb-0">Romantik</h6>
+                    </div>
+                </div>
+                <div class="col-6 col-md-4 col-lg-2 mb-3">
+                    <div class="category-card text-center p-3 rounded">
+                        <i class="fas fa-ghost category-icon mb-2"></i>
+                        <h6 class="mb-0">Korku</h6>
+                    </div>
+                </div>
+                <div class="col-6 col-md-4 col-lg-2 mb-3">
+                    <div class="category-card text-center p-3 rounded">
+                        <i class="fas fa-theater-masks category-icon mb-2"></i>
+                        <h6 class="mb-0">Drama</h6>
+                    </div>
+                </div>
+                <div class="col-6 col-md-4 col-lg-2 mb-3">
+                    <div class="category-card text-center p-3 rounded">
+                        <i class="fas fa-laugh category-icon mb-2"></i>
+                        <h6 class="mb-0">Komedi</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="text-white py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <h5><i class="fas fa-film me-2"></i>FilmAI</h5>
+                    <p class="small">Yapay zeka destekli film öneri platformu. Beğendiğiniz filmlere göre size özel öneriler sunar.</p>
+                </div>
+                <div class="col-md-2 mb-3">
+                    <h6>Bağlantılar</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-white-50">Ana Sayfa</a></li>
+                        <li><a href="#" class="text-white-50">Kategoriler</a></li>
+                        <li><a href="#" class="text-white-50">En İyiler</a></li>
+                        <li><a href="#" class="text-white-50">Yeni Çıkanlar</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-2 mb-3">
+                    <h6>Kategoriler</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-white-50">Aksiyon</a></li>
+                        <li><a href="#" class="text-white-50">Komedi</a></li>
+                        <li><a href="#" class="text-white-50">Drama</a></li>
+                        <li><a href="#" class="text-white-50">Bilim Kurgu</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <h6>Bültenimize Abone Olun</h6>
+                    <p class="small">Yeni filmler ve özellikler hakkında bilgi alın.</p>
+                    <div class="input-group mb-3">
+                        <input type="email" class="form-control" placeholder="E-posta adresiniz">
+                        <button class="btn btn-primary" type="button">Abone Ol</button>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="d-flex justify-content-between align-items-center">
+                <p class="small mb-0">© 2023 FilmAI. Tüm hakları saklıdır.</p>
+                <div class="social-links">
+                    <a href="#" class="text-white me-2"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="text-white me-2"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="text-white me-2"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script type="module" src="script.js"></script>
+    <!-- Auth JS -->
+    <script type="module" src="auth.js"></script>
+</body>
+</html> 
